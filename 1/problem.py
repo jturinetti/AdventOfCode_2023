@@ -32,5 +32,5 @@ def part_b(input):
     # TODO
     return
 
-problem_data = get_data(day=1, year=2022)   # change to correct day/year
+problem_data = get_data(day=1, year=2022)
 print(problem_data)
