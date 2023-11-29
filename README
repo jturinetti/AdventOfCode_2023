@@ -1,0 +1,7 @@
+INSTRUCTIONS
+1. Update AoC session id in %USERPROFILE%\.config\aocd\token with current session id
+2. Copy template problem.py into next day's folder
+3. Start virtual environment (\venv\Scripts\activate)
+
+INSTALLED PACKAGES
+advent-of-code-data (https://pypi.org/project/advent-of-code-data/)
