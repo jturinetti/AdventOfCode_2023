@@ -1,5 +1,6 @@
 from aocd import get_data   # to retrieve puzzle inputs
 from utils import *
+import time
 
 # for parsing input text files if necessary
 def read_input_file(filename):
@@ -40,5 +41,11 @@ problem_data = get_data(day=4, year=2023)
 split_input = problem_data.splitlines()
 
 # call part_a and part_b below
+start_time = time.perf_counter()
 print(part_a(split_input))
+end_time = time.perf_counter()
+print(f"part_a perf: {(end_time - start_time):02f}")
+start_time = time.perf_counter()
 print(part_b(split_input))
+end_time = time.perf_counter()
+print(f"part_a perf: {(end_time - start_time):02f}")
