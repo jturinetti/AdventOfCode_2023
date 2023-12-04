@@ -46,7 +46,7 @@ def part_a(input):
 
             # check around number to see if it should be included
             # check above
-            if row_index > 0:                
+            if row_index > 0:
                 current = x
                 while current <= min(end_index, len(input[row_index]) - 1) and not is_found:
                     print("checking (" + str(current) + " " + str(y) + ")")
@@ -121,4 +121,4 @@ data_matrix = []
 for n in range(len(split_input)):
     data_matrix.append(split_input[n])
 
-print(part_a(data_matrix))
+# print(part_a(data_matrix))
