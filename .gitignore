@@ -1,5 +1,5 @@
 # ignore hidden test class with answer values
-*/hidden_tests.py
+**/hidden_test*.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

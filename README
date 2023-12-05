@@ -5,6 +5,8 @@ INSTRUCTIONS
 
 INSTALLED PACKAGES
 advent-of-code-data (https://pypi.org/project/advent-of-code-data/)
+pytest
+pytest-timeout
 
 OPTIONAL PACKAGES
 advent-of-code-ocr (https://pypi.org/project/advent-of-code-ocr/)
