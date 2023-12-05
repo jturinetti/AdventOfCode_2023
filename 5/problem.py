@@ -17,12 +17,7 @@ def calculate_target_mapping(source_number, mapping_lists):
 def construct_seed_array(input):
     return lmap(lambda x: int(x), input[0].split(' ')[1::])
 
-def solution_impl(input, seed_array):
-    mapping_dictionary = {}
-    name_dictionary = {}
-    # index into dictionary based on source string
-    # determine mapping value
-    # find next dictionary based on target string
+def populate_mapping_dictionaries(input, mapping_dict, name_dict):
     current_target = ''
     for index in range(2, len(input)):
         s = input[index]
@@ -33,15 +28,21 @@ def solution_impl(input, seed_array):
             parsed_mapping_names = parsed_entry.split('-')
             source = parsed_mapping_names[0]
             target = parsed_mapping_names[2]
-            name_dictionary[source] = target
+            name_dict[source] = target
             current_target = target
-            mapping_dictionary[target] = []
+            mapping_dict[target] = []
         else:
             parsed_mapping_values = lmap(lambda x: int(x), s.split(' '))
-            mapping_dictionary[current_target].append(parsed_mapping_values)
+            mapping_dict[current_target].append(parsed_mapping_values)
 
-    locations = []
+def solution_impl(input, seed_array):
+    mapping_dictionary = {}
+    name_dictionary = {}
+    
+    populate_mapping_dictionaries(input, mapping_dictionary, name_dictionary)
+
     current_key = 'seed'
+    lowest = None
     
     for seed in seed_array:
         current_map_value = seed
@@ -49,9 +50,13 @@ def solution_impl(input, seed_array):
             target = name_dictionary[current_key]
             current_map_value = calculate_target_mapping(current_map_value, mapping_dictionary[target])
             current_key = target
-        locations.append(current_map_value)
+        
+        if lowest is None or current_map_value < lowest:
+            lowest = current_map_value
+        
         current_key = 'seed'
-    return min(locations)
+
+    return lowest
 
 # solution functions
 def part_a(input):
@@ -62,26 +67,9 @@ def part_b(input):
     seed_array = construct_seed_array(input)
     mapping_dictionary = {}
     name_dictionary = {}
-    # index into dictionary based on source string
-    # determine mapping value
-    # find next dictionary based on target string
-    current_target = ''
-    for index in range(2, len(input)):
-        s = input[index]
-        if s == '':
-            continue
-        parsed_entry = s.split(' ')[0]
-        if not parsed_entry.isdigit():
-            parsed_mapping_names = parsed_entry.split('-')
-            source = parsed_mapping_names[0]
-            target = parsed_mapping_names[2]
-            name_dictionary[source] = target
-            current_target = target
-            mapping_dictionary[target] = []
-        else:
-            parsed_mapping_values = lmap(lambda x: int(x), s.split(' '))
-            mapping_dictionary[current_target].append(parsed_mapping_values)
-    
+   
+    populate_mapping_dictionaries(input, mapping_dictionary, name_dictionary)
+
     current_key = 'seed'
     
     # TODO: this is a brute force approach and it needs to be optimized
