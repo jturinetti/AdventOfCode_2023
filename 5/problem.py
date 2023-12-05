@@ -1,4 +1,5 @@
 import time
+import logging
 from utils import *
 from my_utils import read_aoc_data
 
@@ -112,4 +113,7 @@ def execute():
     print(f"part_b perf: {(end_time - start_time):02f}")
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, 
+                        format='%(asctime)s %(funcName)s %(message)s', 
+                        handlers=[logging.StreamHandler()])
     execute()
