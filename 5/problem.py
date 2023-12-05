@@ -109,7 +109,7 @@ def execute():
     start_time = time.perf_counter()
     print(part_b(input_data))
     end_time = time.perf_counter()
-    print(f"part_a perf: {(end_time - start_time):02f}")
+    print(f"part_b perf: {(end_time - start_time):02f}")
 
 if __name__ == '__main__':
     execute()

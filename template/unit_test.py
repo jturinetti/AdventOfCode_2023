@@ -4,21 +4,20 @@ import logging
 from problem import part_a, part_b
 
 class Tests(unittest.TestCase):
+    test_data = ''
 
     @pytest.mark.timeout(10)
     def test_part_a(self):
-        expected_result = 'result'
-        sample_data = 'data'
-        result = part_a(sample_data)
+        expected_result = 'val'
+        result = part_a(self.test_data)
         logging.debug('expected result: {}'.format(expected_result))
         logging.debug('actual result: {}'.format(result))
         self.assertEqual(result, expected_result)
 
     @pytest.mark.timeout(10)
     def test_part_b(self):
-        expected_result = 'result'
-        sample_data = 'data'
-        result = part_b(sample_data)
+        expected_result = 'val'
+        result = part_b(self.test_data)
         logging.debug('expected result: {}'.format(expected_result))
         logging.debug('actual result: {}'.format(result))
         self.assertEqual(result, expected_result)
