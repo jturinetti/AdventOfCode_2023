@@ -96,7 +96,7 @@ def part_b(input):
         current_key = 'location'
     return -1
 
-    # TODO: this is a brute force approach and it needs to be optimized
+    # TODO: this is correct, but it's a brute force approach and it needs to be optimized
     lowest = None
     current_key = 'seed'
     

@@ -15,16 +15,16 @@ def part_b(input):
 def execute():
     input_data = read_aoc_data(1, 2023)    # replace with correct day and year
     start_time = time.perf_counter()
-    print(part_a(input_data))
+    logging.info(part_a(input_data))
     end_time = time.perf_counter()
-    print(f"part_a perf: {(end_time - start_time):02f}")
+    logging.info(f"part_a perf: {(end_time - start_time):02f}s")
     start_time = time.perf_counter()
-    print(part_b(input_data))
+    logging.info(part_b(input_data))
     end_time = time.perf_counter()
-    print(f"part_b perf: {(end_time - start_time):02f}")
+    logging.info(f"part_b perf: {(end_time - start_time):02f}s")
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, 
-                        format='%(asctime)s %(funcName)s %(message)s', 
+                        format='[%(asctime)s][%(levelname)-5s] : %(message)s', 
                         handlers=[logging.StreamHandler()])
     execute()
