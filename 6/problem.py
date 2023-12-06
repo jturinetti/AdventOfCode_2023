@@ -17,15 +17,13 @@ def solution_impl(races):
         race_time = races[index][0]
         race_distance = races[index][1]
         counter = 0
-        found_start = False
         found_end = False
         charge_hold_time = 1
         while charge_hold_time < race_time and not found_end:
             remaining_time = race_time - charge_hold_time
             if remaining_time * charge_hold_time > race_distance:
                 counter += 1
-                found_start = True
-            elif found_start:
+            elif counter > 0:
                 # short-circuit once we start seeing shorter distances for hold times
                 found_end = True
                 
