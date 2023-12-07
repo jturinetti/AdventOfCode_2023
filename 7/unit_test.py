@@ -4,11 +4,15 @@ import logging
 from problem import part_a, part_b
 
 class Tests(unittest.TestCase):
-    test_data = ''  # ADD THIS FROM PROBLEM STATEMENT
+    test_data = '''32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483'''.splitlines()
 
     @pytest.mark.timeout(10)
     def test_part_a(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART A)
+        expected_result = 6440
         result = part_a(self.test_data)
         logging.debug('expected result: {}'.format(expected_result))
         logging.debug('actual result: {}'.format(result))
@@ -16,7 +20,7 @@ class Tests(unittest.TestCase):
 
     @pytest.mark.timeout(10)
     def test_part_b(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART B)
+        expected_result = 5905
         result = part_b(self.test_data)
         logging.debug('expected result: {}'.format(expected_result))
         logging.debug('actual result: {}'.format(result))
