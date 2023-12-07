@@ -6,87 +6,69 @@ from my_utils import read_aoc_data
 low_to_high_card_ranking = '23456789TJQKA'
 low_to_high_card_ranking_with_jokers = 'J23456789TQKA'
 
-def ranking_func(e):
-    hand = e.split(' ')[0]
+# rank seeds
+FIVE_OF_A_KIND_RANK = 600000000
+FOUR_OF_A_KIND_RANK = 500000000
+FULL_HOUSE_RANK = 400000000
+THREE_OF_A_KIND_RANK = 300000000
+PAIRS_RANK = 100000000
+
+def rank_hand(hand, joker_count, card_ranking_map):
     rank = 0
     hand_breakdown = set((x, hand.count(x)) for x in hand)
     # 5 of a kind
-    if any(x[1] == 5 for x in hand_breakdown):
-        rank = 600000000
+    if joker_count == 5 or any(x[1] + joker_count == 5 for x in hand_breakdown if joker_count == 0 or x[0] != 'J'):
+        rank = FIVE_OF_A_KIND_RANK
     # 4 of a kind
-    elif any(x[1] == 4 for x in hand_breakdown):
-        rank = 500000000
+    elif any(x[1] + joker_count == 4 for x in hand_breakdown if joker_count == 0 or x[0] != 'J'):
+        rank = FOUR_OF_A_KIND_RANK
     else:
         # count pairs for reference
-        pair_count = len(list(filter(lambda x: x[1] == 2, hand_breakdown)))
-        
-        if any(x[1] == 3 for x in hand_breakdown):
-            # full house
-            if pair_count == 1:
-                rank = 400000000
-            # 3 of a kind
-            else:
-                rank = 300000000
-        # 2 pair or 1 pair?
-        elif pair_count > 0:
-            rank = pair_count * 100000000
-
-    # add value based on card order for high card hands and ties
-    for n in range(5):        
-        rank += (14**(5 - n)) * (low_to_high_card_ranking.find(hand[n]) + 1)
-    
-    return rank
-
-def ranking_func_with_jokers(e):
-    hand = e.split(' ')[0]
-    rank = 0
-    hand_breakdown = set((x, hand.count(x)) for x in hand)
-    
-    joker_count = next(filter(lambda x: x[0] == 'J', hand_breakdown), ('J', 0))[1]
-        
-    # 5 of a kind
-    if joker_count == 5 or any(x[1] + joker_count == 5 for x in hand_breakdown if x[0] != 'J'):
-        rank = 600000000
-    # 4 of a kind
-    elif any(x[1] + joker_count == 4 for x in hand_breakdown if x[0] != 'J'):
-        rank = 500000000
-    else:
-        # count non-joker pairs for reference
-        pair_count = len(list(filter(lambda x: x[1] == 2 and x[0] != 'J', hand_breakdown)))
+        pair_count = len(list(filter(lambda x: x[1] == 2 and (joker_count == 0 or x[0] != 'J'), hand_breakdown)))
 
         if joker_count == 0:
             # normal full house / 3 of a kind check
             if any(x[1] == 3 for x in hand_breakdown):
                 # native full house
                 if pair_count == 1:
-                    rank = 400000000
+                    rank = FULL_HOUSE_RANK
                 # native 3 of a kind
                 else:
-                    rank = 300000000
+                    rank = THREE_OF_A_KIND_RANK
             # 2 pair or 1 pair?
             elif pair_count > 0:
-                rank = pair_count * 100000000
+                rank = pair_count * PAIRS_RANK
         else:
             # new check
             if joker_count == 2 and pair_count == 0:
                 # 3 of a kind                
-                rank = 300000000
+                rank = THREE_OF_A_KIND_RANK
             elif joker_count == 1:
                 if pair_count == 2:
                     # full house with joker
-                    rank = 400000000
+                    rank = FULL_HOUSE_RANK
                 elif pair_count == 1:
                     # 3 of a kind
-                    rank = 300000000
+                    rank = THREE_OF_A_KIND_RANK
                 else:
                     # make a pair with joker
-                    rank = 100000000
+                    rank = PAIRS_RANK
 
     # add value based on card order for high card hands and ties
     for n in range(5):
-        rank += (14**(5 - n)) * (low_to_high_card_ranking_with_jokers.find(hand[n]) + 1)
+        rank += (14**(5 - n)) * (card_ranking_map.find(hand[n]) + 1)
 
     return rank
+
+def ranking_func(e):
+    hand = e.split(' ')[0]
+    return rank_hand(hand, 0, low_to_high_card_ranking)
+
+def ranking_func_with_jokers(e):
+    hand = e.split(' ')[0]
+    joker_count = hand.count('J')
+   
+    return rank_hand(hand, joker_count, low_to_high_card_ranking_with_jokers)
 
 # solution functions
 def part_a(input):    
