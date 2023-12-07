@@ -1,6 +1,9 @@
 # ignore hidden test class with answer values
 **/hidden_test*.py
 
+# VS Code configurations
+**/.vscode/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
