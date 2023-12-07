@@ -26,33 +26,25 @@ def rank_hand(hand, joker_count, card_ranking_map):
         # count pairs for reference
         pair_count = len(list(filter(lambda x: x[1] == 2 and (joker_count == 0 or x[0] != 'J'), hand_breakdown)))
 
-        if joker_count == 0:
-            # normal full house / 3 of a kind check
+        # cannot have more than 2 jokers at this point; we would have hit 4 or 5 of a kind blocks above
+        if joker_count == 2:
+            rank = THREE_OF_A_KIND_RANK
+        elif joker_count == 1:
+            if pair_count == 2:
+                rank = FULL_HOUSE_RANK
+            elif pair_count == 1:
+                rank = THREE_OF_A_KIND_RANK
+            else:
+                rank = PAIRS_RANK
+        elif joker_count == 0:
+            # no jokers, standard checks
             if any(x[1] == 3 for x in hand_breakdown):
-                # native full house
                 if pair_count == 1:
                     rank = FULL_HOUSE_RANK
-                # native 3 of a kind
                 else:
                     rank = THREE_OF_A_KIND_RANK
-            # 2 pair or 1 pair?
             elif pair_count > 0:
-                rank = pair_count * PAIRS_RANK
-        else:
-            # new check
-            if joker_count == 2 and pair_count == 0:
-                # 3 of a kind                
-                rank = THREE_OF_A_KIND_RANK
-            elif joker_count == 1:
-                if pair_count == 2:
-                    # full house with joker
-                    rank = FULL_HOUSE_RANK
-                elif pair_count == 1:
-                    # 3 of a kind
-                    rank = THREE_OF_A_KIND_RANK
-                else:
-                    # make a pair with joker
-                    rank = PAIRS_RANK
+                rank = pair_count * PAIRS_RANK        
 
     # add value based on card order for high card hands and ties
     for n in range(5):
