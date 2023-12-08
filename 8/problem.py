@@ -24,14 +24,10 @@ def part_a(input):
     instructions = input[0]
     dictionary = construct_dictionary(input[2:])
     step_counter = 0
-    instruction_index = 0
     current = 'AAA'
     while current != 'ZZZ':
+        next_instruction = instructions[step_counter % len(instructions)]
         step_counter += 1
-        next_instruction = instructions[instruction_index]
-        instruction_index += 1
-        if instruction_index == len(instructions):
-            instruction_index = 0
         current = navigate_to_next_node(dictionary, current, next_instruction)
     return step_counter
 
@@ -39,10 +35,9 @@ def part_b(input):
     instructions = input[0]
     dictionary = construct_dictionary(input[2:])
     step_counter = 0
-    instruction_index = 0
     instruction_tree_index = 0
     current_instruction_list = [x for x in dictionary.keys() if str.endswith(x, 'A')]
-    next_instruction = instructions[instruction_index]
+    next_instruction = instructions[step_counter]
     lcm_dict = {}
     while not all(str.endswith(x, 'Z') for x in current_instruction_list):
         current_instruction_list[instruction_tree_index] = navigate_to_next_node(dictionary, current_instruction_list[instruction_tree_index], next_instruction)
@@ -56,11 +51,8 @@ def part_b(input):
         instruction_tree_index += 1
         if instruction_tree_index == len(current_instruction_list):
             step_counter += 1
-            instruction_index += 1
             instruction_tree_index = 0
-            if instruction_index == len(instructions):
-                instruction_index = 0
-            next_instruction = instructions[instruction_index]
+            next_instruction = instructions[step_counter % len(instructions)]
 
     # we should never get to this point; lcm result should be returned first always        
     return step_counter
