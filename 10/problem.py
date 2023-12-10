@@ -6,6 +6,22 @@ from my_utils import read_aoc_data
 from shapely.geometry import Point
 from shapely.geometry import Polygon
 
+def find_s(input):
+    s_found = False
+    s_row_index = 0
+    s_col_index = 0
+    while s_row_index < len(input) and s_found == False:
+        while s_col_index < len(input[s_row_index]) and s_found == False:
+            if input[s_row_index][s_col_index] == 'S':
+                s_found = True
+                break
+            s_col_index += 1
+        if s_found == False:
+            s_col_index = 0
+            s_row_index += 1
+    return (s_row_index, s_col_index)
+
+# TODO this could be cleaned up, refactored, etc
 def recurse_pipe(input, seen_points, last_point, row, col):
     next = None
 
@@ -35,24 +51,6 @@ def recurse_pipe(input, seen_points, last_point, row, col):
 
     return recurse_pipe(input, seen_points + [next], (row, col), next[0], next[1])
 
-def check_if_contained(input, pipe_path, cache, accumulator, row, col):
-    # check north
-    # check west
-    # check south
-    # check east
-
-    # between the pipes up/down
-    # '7F', '||', '7L', '7|', '|F', '|L', 'J|', 'JF', 'JL'
-    # between the pipes left/right
-    # -
-    # 7
-    # -
-    # F
-    # -
-    # 
-
-    return []
-
 def draw_bounding_box(path):
     min_x = None
     min_y = None
@@ -73,78 +71,33 @@ def draw_bounding_box(path):
     
 # solution functions
 def part_a(input):
-    s_found = False
-    s_row_index = 0
-    s_col_index = 0
-    while s_row_index < len(input) and s_found == False:
-        while s_col_index < len(input[s_row_index]) and s_found == False:
-            if input[s_row_index][s_col_index] == 'S':
-                s_found = True
-                break
-            s_col_index += 1
-        if s_found == False:
-            s_col_index = 0
-            s_row_index += 1
+    s_coords = find_s(input)
+    seen_points = [s_coords]
     
-    print('{}, {}'.format(s_row_index, s_col_index))
-
-    seen_points = [(s_row_index, s_col_index)]
-
-    # test each direction starting from S and keep track of seen indices
-    # find one connecting pipe and go from there
-    
-    # here we go
-    pipe_path = recurse_pipe(input, seen_points, None, s_row_index, s_col_index)
+    pipe_path = recurse_pipe(input, seen_points, None, s_coords[0], s_coords[1])
     return len(pipe_path) / 2
 
 def part_b(input):
-    s_found = False
-    s_row_index = 0
-    s_col_index = 0
-    while s_row_index < len(input) and s_found == False:
-        while s_col_index < len(input[s_row_index]) and s_found == False:
-            if input[s_row_index][s_col_index] == 'S':
-                s_found = True
-                break
-            s_col_index += 1
-        if s_found == False:
-            s_col_index = 0
-            s_row_index += 1
-    
-    print('{}, {}'.format(s_row_index, s_col_index))
+    s_coords = find_s(input)
+    seen_points = [s_coords]
 
-    seen_points = [(s_row_index, s_col_index)]
-
-    # test each direction starting from S and keep track of seen indices
-    # find one connecting pipe and go from there
-    
-    # here we go
-    pipe_path = recurse_pipe(input, seen_points, None, s_row_index, s_col_index)
+    pipe_path = recurse_pipe(input, seen_points, None, s_coords[0], s_coords[1])
 
     # draw box
     bounding_box = draw_bounding_box(pipe_path)
 
-    # iterate through box and check each
-    # 6 - 133
-    # 1 - 135
-    # TODO - make this programmatic
+    # iterate through box and check each point not part of the path points
     polygon = Polygon(pipe_path)
-    enclosed_spaces = []
     counter = 0
-    for r in range(6, 133):
-        for c in range(1, 135):
+    for r in range(min(bounding_box, key=lambda x: x[0]), max(bounding_box, key=lambda x: x[0])):
+        for c in range(min(bounding_box, key=lambda x: x[1]), max(bounding_box, key=lambda x: x[1])):
             if (r, c) in pipe_path:
-                continue
-            if (r, c) in enclosed_spaces:
                 continue
             
             point = Point(r, c)
             if polygon.contains(point):
                 counter += 1
-            # enclosed_spaces += check_if_contained(input, pipe_path, {}, [], r, c)
     
-    logging.debug(input)
-    # return len(enclosed_spaces)
     return counter
 
 def execute():

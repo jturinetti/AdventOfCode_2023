@@ -1,16 +1,12 @@
 from aocd import get_data   # to retrieve puzzle inputs
 
-# file parsing utilities
-def read_input_file(filename):
+# file/data parsing utilities
+def read_input_file(filename: str):
     input_file = open(filename, 'r')
     return input_file.readlines()
 
-# math operations
-def add(x, y):
-    return x + y
-
-def sub(x, y):
-    return x - y
+def parse_multi_line_input(input: str):
+    return list(filter(str.strip, input.splitlines()))
 
 # wrapper to call aocd api to retrieve input for day and year
 def read_aoc_data(day, year):
