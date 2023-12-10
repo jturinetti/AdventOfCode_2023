@@ -4,22 +4,27 @@ import logging
 from problem import part_a, part_b
 
 class Tests(unittest.TestCase):
-    test_data = ''  # ADD THIS FROM PROBLEM STATEMENT
+    test_data = list(filter(str.strip, '''
+.....
+.S-7.
+.|.|.
+.L-J.
+.....'''.splitlines()))
 
     @pytest.mark.timeout(10)
     def test_part_a(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART A)
+        expected_result = 4
         result = part_a(self.test_data)
         self.assertEqual(result, expected_result)
 
     @pytest.mark.timeout(10)
     def test_part_b(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART B)
+        expected_result = 1
         result = part_b(self.test_data)
         self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO, 
+    logging.basicConfig(level=logging.DEBUG, 
                         format='[%(asctime)s][%(levelname)-5s] : %(message)s', 
                         handlers=[logging.StreamHandler()])
     unittest.main()
