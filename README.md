@@ -8,6 +8,7 @@
 - advent-of-code-data (https://pypi.org/project/advent-of-code-data/)
 - pytest
 - pytest-timeout
+- shapely
 
-## OPTIONAL PACKAGES
+# OPTIONAL PACKAGES
 - advent-of-code-ocr (https://pypi.org/project/advent-of-code-ocr/)
