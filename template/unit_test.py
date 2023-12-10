@@ -1,10 +1,11 @@
 import unittest
 import pytest
 import logging
+from my_utils import *
 from problem import part_a, part_b
 
 class Tests(unittest.TestCase):
-    test_data = ''  # ADD THIS FROM PROBLEM STATEMENT
+    test_data = parse_multi_line_input('')  # ADD THIS FROM PROBLEM STATEMENT
 
     @pytest.mark.timeout(10)
     def test_part_a(self):

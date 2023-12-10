@@ -88,9 +88,9 @@ def part_b(input):
 
     # iterate through box and check each point not part of the path points
     polygon = Polygon(pipe_path)
-    counter = 0
-    for r in range(min(bounding_box, key=lambda x: x[0]), max(bounding_box, key=lambda x: x[0])):
-        for c in range(min(bounding_box, key=lambda x: x[1]), max(bounding_box, key=lambda x: x[1])):
+    counter = 0    
+    for r in range(min(bounding_box, key=lambda x: x[0])[0], max(bounding_box, key=lambda x: x[0])[0]):
+        for c in range(min(bounding_box, key=lambda x: x[1])[1], max(bounding_box, key=lambda x: x[1])[1]):
             if (r, c) in pipe_path:
                 continue
             
