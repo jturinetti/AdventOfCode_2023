@@ -9,6 +9,7 @@
 - pytest
 - pytest-timeout
 - shapely
+- more_itertools
 
 # OPTIONAL PACKAGES
 - advent-of-code-ocr (https://pypi.org/project/advent-of-code-ocr/)
