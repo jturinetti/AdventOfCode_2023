@@ -31,19 +31,19 @@ def check_col_equivalence(grid, row_index, left_index, right_index):
 
     return False
 
-def solve_grid(grid, orig):
-    # look for 2 identical rows
+def find_matching_rows(grid, original_mirror_location):
     logging.debug('looking at rows')
-    for key, group in itertools.groupby(grid, lambda x: x): 
+    for key, group in itertools.groupby(grid, lambda x: x):
         if len(list(group)) > 1:
             for r in range(len(grid) - 1):
                 if grid[r] == key and grid[r] == grid[r + 1]:
                     if check_row_equivalence(grid, r, r + 1):
-                        if orig is None or orig != ('row', r + 1):
+                        if original_mirror_location is None or original_mirror_location != ('row', r + 1):
                             logging.debug('ROW FOUND! row index {}'.format(r))
                             return ('row', r + 1)
-                          
-    # if no identical rows, look at columns
+    return None
+
+def find_matching_cols(grid, original_mirror_location):
     logging.debug('looking at columns')
     is_found = False
     col_index = 0
@@ -58,15 +58,23 @@ def solve_grid(grid, orig):
         if row_index == len(grid):            
             is_found = check_col_equivalence(grid, 0, col_index, col_index + 1)
             if is_found:
-                if orig is None or orig != ('col', col_index + 1):
+                if original_mirror_location is None or original_mirror_location != ('col', col_index + 1):
                     logging.debug('COLUMN FOUND! col index {}'.format(col_index + 1))
                     return ('col', col_index + 1)
                 else:
                     is_found = False
             row_index = 0
-            col_index += 1    
+            col_index += 1
 
     return None
+
+def solve_grid(grid, original_mirror_location):
+    # look for 2 identical rows
+    row_result = find_matching_rows(grid, original_mirror_location)
+    if row_result is None:
+        return find_matching_cols(grid, original_mirror_location)
+    
+    return row_result    
 
 def fix_smudge(grid, row, col):
     gl = list(grid[row])
