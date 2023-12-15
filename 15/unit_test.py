@@ -5,17 +5,17 @@ from my_utils import *
 from problem import part_a, part_b
 
 class Tests(unittest.TestCase):
-    test_data = parse_multi_line_input('')  # ADD THIS FROM PROBLEM STATEMENT
+    test_data = parse_multi_line_input('rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7')
 
     @pytest.mark.timeout(10)
     def test_part_a(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART A)
+        expected_result = 1320
         result = part_a(self.test_data)
         self.assertEqual(result, expected_result)
 
     @pytest.mark.timeout(10)
     def test_part_b(self):
-        expected_result = 'val'     # REPLACE WITH CORRECT SAMPLE VALUE (PART B)
+        expected_result = 145
         result = part_b(self.test_data)
         self.assertEqual(result, expected_result)
 
