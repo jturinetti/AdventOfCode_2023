@@ -22,18 +22,6 @@ def flatten_grid_rows(grid):
 def grid_string(grid):
     return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
 
-def up_one(coordinate):
-    return (coordinate[0] - 1, coordinate[1])
-
-def down_one(coordindate):
-    return (coordindate[0] + 1, coordindate[1])
-
-def left_one(coordinate):
-    return (coordinate[0], coordinate[1] - 1)
-
-def right_one(coordinate):
-    return (coordinate[0], coordinate[1] + 1)
-
 # shape utilities
 # determines corner coordinates around an arbitrary shape from a list of coordinates
 # TODO: use existing function in shapely or pandas?
@@ -73,15 +61,21 @@ def calculate_inner_area(path):
 
 # shoelace formula: https://en.wikipedia.org/wiki/Shoelace_formula
 def shoelace(path):
-  area = 0
-  for (x0, y0), (x1, y1) in itertools.pairwise(path):
-    area += (x0 * y1) - (y0 * x1)
-  return area / 2.0
+    area = 0
+    for (x0, y0), (x1, y1) in itertools.pairwise(path):
+        area += (x0 * y1) - (y0 * x1)
+
+    ret = area / 2.0
+    logging.debug('shoelace area: {}'.format(ret))
+    return ret
 
 # pick's thereom https://en.wikipedia.org/wiki/Pick's_theorem
-# returns i + b from equation
+# shoelace only measures halfway through border spaces and 1/4 through corners, hence (perimeter / 2) + 1
+# i + b = A + b/2 + 1
 def picks(path, perimeter):
-  return shoelace(path) + (perimeter / 2.0) + 1
+  ret = shoelace(path) + (perimeter / 2.0) + 1
+  logging.debug('picks thereom (i + b): {}'.format(ret))
+  return ret
 
 # wrapper to call aocd api to retrieve input for day and year
 def read_aoc_data(day, year):
