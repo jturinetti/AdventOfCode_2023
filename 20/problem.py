@@ -5,13 +5,13 @@ from my_utils import read_aoc_data
 def flip_flop(current: int):
     return int(not bool(current))
     
-def conjunction(d: dict, linked: list):
-    # TESTING
-    for x in linked:
-        logging.debug('      cur val of {}: {}'.format(x, d[x]['val']))
-    # *******
-        
-    output = int(not all(bool(d[l]['val']) for l in linked))
+def conjunction(d: dict, linked: list, memory: dict):
+    # # TESTING
+    # for x in linked:
+    #     logging.debug('      cur val of {}: {}'.format(x, memory[x]))
+    # # *******
+    
+    output = int(not all(bool(memory[l]) for l in linked))
     logging.debug('      outputting {} to next instruction'.format(output))
     return output
 
@@ -39,6 +39,10 @@ def parse_input(input):
             if c in d[k]['targets']:
                 linked.append(k)
         d[c]['linked'] = linked
+        d[c]['memory'] = {}
+        for x in linked:
+            d[c]['memory'][x] = 0
+    logging.debug(d)
     return d
 
 # count_dict = {}
@@ -63,10 +67,10 @@ def process(d: dict, q: list, new_q: list):
         elif next_pulse == 1:
             high += 1
 
-        logging.debug ('   processing {}: {} -{}-> {}'.format(key, ins[0], pulse_tostr(next_pulse), key))        
+        logging.debug ('    processing {}: {} -{}-> {}'.format(key, ins[0], pulse_tostr(next_pulse), key))        
 
         if not key in d:
-            return (d, q, new_q, high, low)
+            continue
         
         t = d[key]
         if t['type'] == '%':
@@ -74,13 +78,14 @@ def process(d: dict, q: list, new_q: list):
                 logging.debug('     type: %')
                 next_pulse = flip_flop(t['val'])
                 t['val'] = next_pulse
-                targets += t['targets']  
+                targets += t['targets']
             else:
                 logging.debug('     do nothing')     
         elif t['type'] == '&':
             logging.debug('     type: &')
+            t['memory'][ins[0]] = next_pulse
+            next_pulse = conjunction(d, t['linked'], t['memory'])
             t['val'] = next_pulse
-            next_pulse = conjunction(d, t['linked'])
             targets += t['targets']
         else:
             targets += t['targets']
@@ -90,12 +95,9 @@ def process(d: dict, q: list, new_q: list):
             new_q.append((key, x, next_pulse))
     return (d, q, new_q, high, low)
 
-# solution functions
-def part_a(input):
-    d = parse_input(input)
-    logging.debug(d)
+def press_button(num_presses, d: dict):
     total_high = total_low = 0
-    for x in range(1000):
+    for x in range(num_presses):
         cycle_high = cycle_low = 0
         logging.debug('CYCLE {}'.format(x + 1))
         qq = []
@@ -117,7 +119,13 @@ def part_a(input):
         total_low += cycle_low
 
     logging.debug('total high: {}, total low: {}'.format(total_high, total_low))
-    
+    return (total_high, total_low)
+
+# solution functions
+def part_a(input):
+    d = parse_input(input)
+    logging.debug(d)
+    (total_high, total_low) = press_button(1000, d)
     return total_high * total_low
 
 def part_b(input):
@@ -136,7 +144,7 @@ def execute():
     logging.info(f"part_b perf: {(end_time - start_time):02f}s")
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, 
+    logging.basicConfig(level=logging.INFO, 
                         format='[%(asctime)s][%(levelname)-5s] : %(message)s', 
                         handlers=[logging.StreamHandler()])
     execute()
