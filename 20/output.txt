@@ -1,0 +1,112 @@
+{'jv': {'type': '%', 'targets': ['rn', 'jn'], 'val': 0}, 'fb': {'type': '&', 'targets': ['hb', 'vk', 'fz', 'kl', 'cg'], 'val': 0, 'linked': {'fb': 0}}, 'rr': {'type': '%', 'targets': ['vm', 'gp'], 'val': 0}, 'gp': {'type': '&', 'targets': ['vm', 'cb', 'bd', 'qm', 'xf', 'pk'], 'val': 0, 'linked': {'gp': 0}}, 'hm': {'type': '%', 'targets': ['ql'], 'val': 0}, 'cf': {'type': '%', 'targets': ['dx', 'fb'], 'val': 0}, 'cg': {'type': '%', 'targets': ['kl'], 'val': 0}, 'hv': {'type': '%', 'targets': ['kg', 'fb'], 'val': 0}, 'hs': {'type': '%', 'targets': ['jv'], 'val': 0}, 'bd': {'type': '%', 'targets': ['dt'], 'val': 0}, 'xv': {'type': '%', 'targets': ['mv', 'gp'], 'val': 0}, 'js': {'type': '%', 'targets': ['zb', 'jl'], 'val': 0}, 'rn': {'type': '%', 'targets': ['bk', 'jn'], 'val': 0}, 'lp': {'type': '%', 'targets': ['hm'], 'val': 0}, 'dx': {'type': '%', 'targets': ['fb', 'jm'], 'val': 0}, 'ss': {'type': '%', 'targets': ['lp'], 'val': 0}, 'hn': {'type': '&', 'targets': ['xn'], 'val': 0, 'linked': {'hn': 0}}, 'bh': {'type': '%', 'targets': ['jl', 'ms'], 'val': 0}, 'km': {'type': '%', 'targets': ['jl', 'lm'], 'val': 0}, 'mv': {'type': '%', 'targets': ['gp', 'qm'], 'val': 0}, 'jl': {'type': '&', 'targets': ['km', 'lm', 'ms', 'mp', 'lr', 'zb', 'bg'], 'val': 0, 'linked': {'jl': 0}}, 'pt': {'type': '%', 'targets': ['jt', 'jl'], 'val': 0}, 'cb': {'type': '%', 'targets': ['bd'], 'val': 0}, 'xt': {'type': '%', 'targets': ['jn', 'jf'], 'val': 0}, 'kg': {'type': '%', 'targets': ['fb'], 'val': 0}, 'dg': {'type': '%', 'targets': ['jn'], 'val': 0}, 'rt': {'type': '%', 'targets': ['fb', 'hb'], 'val': 0}, 'broadcaster': {'type': 'broadcaster', 'targets': ['km', 'xt', 'pk', 'vk'], 'val': 0}, 'lr': {'type': '%', 'targets': ['pt'], 'val': 0}, 'vm': {'type': '%', 'targets': ['bf'], 'val': 0}, 'hx': {'type': '%', 'targets': ['qd', 'jl'], 'val': 0}, 'mp': {'type': '&', 'targets': ['xn'], 'val': 0, 'linked': {'mp': 0}}, 'hb': {'type': '%', 'targets': ['pd'], 'val': 0}, 'vk': {'type': '%', 'targets': ['cg', 'fb'], 'val': 0}, 'kl': {'type': '%', 'targets': ['rs'], 'val': 0}, 'pk': {'type': '%', 'targets': ['gp', 'cb'], 'val': 0}, 'jt': {'type': '%', 'targets': ['hx', 'jl'], 'val': 0}, 'jn': {'type': '&', 'targets': ['hs', 'lp', 'hm', 'hn', 'ql', 'xt', 'ss'], 'val': 0, 'linked': {'jn': 0}}, 'bg': {'type': '%', 'targets': ['js'], 'val': 0}, 'kz': {'type': '%', 'targets': ['ss', 'jn'], 'val': 0}, 'bf': {'type': '%', 'targets': ['fx', 'gp'], 'val': 0}, 'bk': {'type': '%', 'targets': ['dg', 'jn'], 'val': 0}, 'qm': {'type': '%', 'targets': ['rr'], 'val': 0}, 'fx': {'type': '%', 'targets': ['gp', 'dp'], 'val': 0}, 'dp': {'type': '%', 'targets': ['gp'], 'val': 0}, 'jf': {'type': '%', 'targets': ['jn', 'kz'], 'val': 0}, 'jm': {'type': '%', 'targets': ['hv', 'fb'], 'val': 0}, 'ql': {'type': '%', 'targets': ['hs'], 'val': 0}, 'ms': {'type': '%', 'targets': ['bg'], 'val': 0}, 'zb': {'type': '%', 'targets': ['lr'], 'val': 0}, 'rs': {'type': '%', 'targets': ['fb', 'rt'], 'val': 0}, 'dt': {'type': '%', 'targets': ['xv', 'gp'], 'val': 0}, 'lm': {'type': '%', 'targets': ['bh'], 'val': 0}, 'xf': {'type': '&', 'targets': ['xn'], 'val': 0, 'linked': {'xf': 0}}, 'pd': {'type': '%', 'targets': ['cf', 'fb'], 'val': 0}, 'qd': {'type': '%', 'targets': ['jl'], 'val': 0}, 'xn': {'type': '&', 'targets': ['rx'], 'val': 0, 'linked': {'xn': 0}}, 'fz': {'type': '&', 'targets': ['xn'], 'val': 0, 'linked': {'fz': 0}}}
+CYCLE 1
+   processing broadcaster: button -low-> broadcaster
+    high and low pulse counts for last instruction: 0, 1
+   processing km: broadcaster -low-> km
+     type: %
+   processing xt: broadcaster -low-> xt
+     type: %
+   processing pk: broadcaster -low-> pk
+     type: %
+   processing vk: broadcaster -low-> vk
+     type: %
+    high and low pulse counts for last instruction: 0, 4
+   processing jl: km -high-> jl
+     type: &
+      outputting 1 to {'jl': 0, 'km': 1}
+   processing lm: km -high-> lm
+     do nothing
+   processing jn: xt -high-> jn
+     type: &
+      outputting 1 to {'jn': 0, 'xt': 1}
+   processing jf: xt -high-> jf
+     do nothing
+   processing gp: pk -high-> gp
+     type: &
+      outputting 1 to {'gp': 0, 'pk': 1}
+   processing cb: pk -high-> cb
+     do nothing
+   processing cg: vk -high-> cg
+     do nothing
+   processing fb: vk -high-> fb
+     type: &
+      outputting 1 to {'fb': 0, 'vk': 1}
+    high and low pulse counts for last instruction: 8, 0
+   processing km: jl -high-> km
+     do nothing
+   processing lm: jl -high-> lm
+     do nothing
+   processing ms: jl -high-> ms
+     do nothing
+   processing mp: jl -high-> mp
+     type: &
+      outputting 1 to {'mp': 0, 'jl': 1}
+   processing lr: jl -high-> lr
+     do nothing
+   processing zb: jl -high-> zb
+     do nothing
+   processing bg: jl -high-> bg
+     do nothing
+   processing hs: jn -high-> hs
+     do nothing
+   processing lp: jn -high-> lp
+     do nothing
+   processing hm: jn -high-> hm
+     do nothing
+   processing hn: jn -high-> hn
+     type: &
+      outputting 1 to {'hn': 0, 'jn': 1}
+   processing ql: jn -high-> ql
+     do nothing
+   processing xt: jn -high-> xt
+     do nothing
+   processing ss: jn -high-> ss
+     do nothing
+   processing vm: gp -high-> vm
+     do nothing
+   processing cb: gp -high-> cb
+     do nothing
+   processing bd: gp -high-> bd
+     do nothing
+   processing qm: gp -high-> qm
+     do nothing
+   processing xf: gp -high-> xf
+     type: &
+      outputting 1 to {'xf': 0, 'gp': 1}
+   processing pk: gp -high-> pk
+     do nothing
+   processing hb: fb -high-> hb
+     do nothing
+   processing vk: fb -high-> vk
+     do nothing
+   processing fz: fb -high-> fz
+     type: &
+      outputting 1 to {'fz': 0, 'fb': 1}
+   processing kl: fb -high-> kl
+     do nothing
+   processing cg: fb -high-> cg
+     do nothing
+    high and low pulse counts for last instruction: 25, 0
+   processing xn: mp -high-> xn
+     type: &
+      outputting 1 to {'xn': 0, 'mp': 1}
+   processing xn: hn -high-> xn
+     type: &
+      outputting 1 to {'xn': 0, 'mp': 1, 'hn': 1}
+   processing xn: xf -high-> xn
+     type: &
+      outputting 1 to {'xn': 0, 'mp': 1, 'hn': 1, 'xf': 1}
+   processing xn: fz -high-> xn
+     type: &
+      outputting 1 to {'xn': 0, 'mp': 1, 'hn': 1, 'xf': 1, 'fz': 1}
+    high and low pulse counts for last instruction: 4, 0
+   processing rx: xn -high-> rx
+    high and low pulse counts for last instruction: 1, 0
+   processing rx: xn -high-> rx
+    high and low pulse counts for last instruction: 1, 0
+   processing rx: xn -high-> rx
+    high and low pulse counts for last instruction: 1, 0
+   processing rx: xn -high-> rx
+    high and low pulse counts for last instruction: 1, 0
+   CYCLE 1 high and low pulse counts: 41, 5
+total high: 41, total low: 5
