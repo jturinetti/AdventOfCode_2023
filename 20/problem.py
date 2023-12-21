@@ -32,7 +32,7 @@ def parse_input(input):
             c_list.append(key)
         d[key] = subdict
     
-    # map conjuction nodes to linked modules
+    # map conjunction nodes to linked modules
     for c in c_list:
         linked = []
         for k in d.keys():
@@ -44,8 +44,6 @@ def parse_input(input):
             d[c]['memory'][x] = 0
     logging.debug(d)
     return d
-
-# count_dict = {}
 
 def pulse_tostr(val: int):
     if val == 0:
