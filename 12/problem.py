@@ -2,9 +2,9 @@ import time
 import logging
 from utils import *
 import re
-import itertools
 import more_itertools
-from my_utils import read_aoc_data, parse_multi_line_input
+from functools import cache
+from my_utils import read_aoc_data
 
 def parse_row(row):
     data = row.split(' ')
@@ -42,6 +42,48 @@ def find_matches_in_permutations(permutations, gear_string, template_string):
     logging.debug('{} has {} arrangement(s)'.format(gear_string, counter))
     return counter
 
+def unfold(gear_string, arrangements):
+    orig_str = gear_string
+    orig_a = arrangements
+    for n in range(4):
+        if n != 4:
+            gear_string += '?'
+        gear_string = gear_string + orig_str
+        arrangements = arrangements + orig_a
+    
+    return (gear_string, arrangements)
+
+# TODO - this does not work and I'm not sure why yet
+@functools.cache
+def find_recursive_matches(gear_string, arrangements):
+    logging.debug('gear string: {}, arrangements: {}'.format(gear_string, arrangements))
+    total_remaining = sum(lmap(int, arrangements))
+    gears_remaining = gear_string.count('#')
+    symbols_remaining = gears_remaining + gear_string.count('?')
+
+    if gears_remaining > total_remaining or symbols_remaining < total_remaining:
+        return 0
+    
+    if total_remaining == 0:
+        return 1
+    
+    if gear_string[0] == '.':
+        return find_recursive_matches(gear_string[1:], arrangements)
+
+    if gear_string[0] == '#':
+        match = re.search('[#?]{{{}}}'.format(arrangements[0]), gear_string)
+        if match and match.start() == 0:
+        
+            if len(arrangements) == 1 and len(gear_string) == int(arrangements[0]):
+                return 1
+            if gear_string[match.end()] == '#':
+                return 0
+            return find_recursive_matches(gear_string[match.end() + 1:], arrangements[1:])
+        return 0
+    
+    # gear_string must start with ? at this point
+    return find_recursive_matches(gear_string[1:], arrangements) + find_recursive_matches('#' + gear_string[1:], arrangements)
+
 # solution functions
 def part_a(input):
     counter = 0
@@ -59,35 +101,26 @@ def part_a(input):
         logging.debug('permutations generated')    
         
         template_str = create_regex_pattern(arrangements)
-        logging.debug(template_str)        
+        logging.debug(template_str)
         counter += find_matches_in_permutations(perms, gear_string, template_str)
     return counter
 
-# WIP: part b needs to be smarter. part a approach is not optimized for this data set
 def part_b(input):
     counter = 0
     for row in input:
         (gear_string, arrangements) = parse_row(row)
         
         # unfold!
-        orig_str = gear_string
-        orig_a = arrangements
-        for n in range(4):
-            gear_string = gear_string + orig_str
-            if n != 4:
-                gear_string += '?'
-            arrangements = arrangements + orig_a
-        logging.debug(gear_string)
-        q_count = gear_string.count('?')
-        existing_gears = gear_string.count('#')
-        total_gears = sum(arrangements)
+        (gear_string, arrangements) = unfold(gear_string, arrangements)
         
-        # TODO
-
-    return -1
+        result = find_recursive_matches(gear_string, ''.join(map(str, arrangements)))
+        logging.info('{} matches found for gear string {} and arrangements {}'.format(result, gear_string, arrangements))
+        counter += result
+    print(find_recursive_matches.cache_info())
+    return counter
 
 def execute():
-    input_data = read_aoc_data(12, 2023)    # replace with correct day and year
+    input_data = read_aoc_data(12, 2023)
     start_time = time.perf_counter()
     logging.info('part_a answer: {}'.format(part_a(input_data)))
     end_time = time.perf_counter()
