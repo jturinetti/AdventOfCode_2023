@@ -79,7 +79,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, 
+    logging.basicConfig(level=logging.INFO, 
                         format='[%(asctime)s][%(levelname)-5s] : %(message)s', 
                         handlers=[logging.StreamHandler()])
     unittest.main()

@@ -53,11 +53,20 @@ def unfold(gear_string, arrangements):
     
     return (gear_string, arrangements)
 
-# TODO - this does not work and I'm not sure why yet
 @functools.cache
 def find_recursive_matches(gear_string, arrangements):
+    print(arrangements)
     logging.debug('gear string: {}, arrangements: {}'.format(gear_string, arrangements))
-    total_remaining = sum(lmap(int, arrangements))
+    
+    arr_list = []
+    if '-' in arrangements:
+        arr_list = list(map(int, arrangements.split('-')))
+    elif arrangements != '':
+        arr_list = [int(arrangements)]
+    else:
+        arr_list = []
+        
+    total_remaining = sum(arr_list)
     gears_remaining = gear_string.count('#')
     symbols_remaining = gears_remaining + gear_string.count('?')
 
@@ -71,14 +80,15 @@ def find_recursive_matches(gear_string, arrangements):
         return find_recursive_matches(gear_string[1:], arrangements)
 
     if gear_string[0] == '#':
-        match = re.search('[#?]{{{}}}'.format(arrangements[0]), gear_string)
-        if match and match.start() == 0:
-        
-            if len(arrangements) == 1 and len(gear_string) == int(arrangements[0]):
+        match = re.search('[#?]{{{}}}'.format(arr_list[0]), gear_string)
+        if match and match.start() == 0:        
+            if len(arr_list) == 1 and len(gear_string) == arr_list[0]:
                 return 1
+            print(gear_string)
+            print(match.end())
             if gear_string[match.end()] == '#':
                 return 0
-            return find_recursive_matches(gear_string[match.end() + 1:], arrangements[1:])
+            return find_recursive_matches(gear_string[match.end() + 1:], '-'.join(map(str, arr_list[1:])))
         return 0
     
     # gear_string must start with ? at this point
@@ -113,7 +123,7 @@ def part_b(input):
         # unfold!
         (gear_string, arrangements) = unfold(gear_string, arrangements)
         
-        result = find_recursive_matches(gear_string, ''.join(map(str, arrangements)))
+        result = find_recursive_matches(gear_string, '-'.join(map(str, arrangements)))
         logging.info('{} matches found for gear string {} and arrangements {}'.format(result, gear_string, arrangements))
         counter += result
     print(find_recursive_matches.cache_info())
