@@ -16,6 +16,11 @@ def parse_multi_line_input(input: str):
 def generate_empty_grid(row_count, col_count, char):
     return [[char for x in range(col_count)] for y in range(row_count)]
 
+# ['123','456'] -> [[1,2,3],[4,5,6]]
+def expand_grid_rows(grid):
+    return [list(row) for row in grid]
+
+# [[1,2,3],[4,5,6]] -> ['123','456']
 def flatten_grid_rows(grid):
     return [''.join(row) for row in grid]
 
@@ -23,16 +28,16 @@ def grid_string(grid):
     return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
 
 def up_one(coordinate):
-    return (coordinate[0] - 1, coordinate[1])
+    return (max(coordinate[0] - 1, 0), coordinate[1])
 
-def down_one(coordindate):
-    return (coordindate[0] + 1, coordindate[1])
+def down_one(coordindate, row_count):
+    return (min(coordindate[0] + 1, row_count - 1), coordindate[1])
 
 def left_one(coordinate):
-    return (coordinate[0], coordinate[1] - 1)
+    return (coordinate[0], max(coordinate[1] - 1, 0))
 
-def right_one(coordinate):
-    return (coordinate[0], coordinate[1] + 1)
+def right_one(coordinate, col_count):
+    return (coordinate[0], min(coordinate[1] + 1, col_count - 1))
 
 # shape utilities
 # determines corner coordinates around an arbitrary shape from a list of coordinates
