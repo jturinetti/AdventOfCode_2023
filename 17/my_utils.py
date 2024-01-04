@@ -16,7 +16,7 @@ def flatten_grid_rows(grid):
     return [''.join(row) for row in grid]
 
 def grid_string(grid):
-    return '\n' + '\n'.join([''.join([item for item in row]) for row in grid])
+    return '\n' + '\n'.join([' '.join([str(item) for item in row]) for row in grid])
 
 def up_one(coordinate):
     return (coordinate[0] - 1, coordinate[1])
